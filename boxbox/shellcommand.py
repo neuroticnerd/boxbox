@@ -5,6 +5,10 @@ import sys
 import os
 import shlex
 
+"""
+REPLACE SUBPROCESS WITH ENVOY MODULE!!!
+"""
+
 
 class ShellCommand(object):
     def __init__(self, cmd, *args, **kwargs):

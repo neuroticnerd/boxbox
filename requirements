@@ -1,4 +1,5 @@
-
+PyYAML==3.11
+click==3.3
 ecdsa==0.13
 paramiko==1.15.2
 pycrypto==2.6.1

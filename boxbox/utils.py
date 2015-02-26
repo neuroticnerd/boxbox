@@ -34,10 +34,11 @@ def nl(level=None):
 def log(message, error=False, *args, **kwargs):
     if not message:
         return
-    if error:
-        logging.error(message, *args, **kwargs)
-    else:
-        logging.info(message, *args, **kwargs)
+    logging.info(message, *args, **kwargs)
+
+
+def error(message, *args, **kwargs):
+    logging.error(message, *args, **kwargs)
 
 
 def warning(message, *args, **kwargs):

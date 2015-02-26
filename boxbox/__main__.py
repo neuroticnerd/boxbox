@@ -4,10 +4,10 @@
 # cannot do 'from . import boxbox' because relative imports don't work the
 # way you expect when calling this file directly (e.g. python boxbox)
 import boxbox
-#from . import boxbox
 
 """
 # only needed for relative imports
+# instead of 'from . import boxbox':
 if not __package__ and False:
     # http://stackoverflow.com/questions/2943847/\
     #     nightmare-with-relative-imports-how-does-pep-366-work
@@ -27,4 +27,4 @@ if not __package__ and False:
 
 
 if __name__ == '__main__':
-    boxbox.boxbox.CLI()
+    boxbox.interface.CLI()

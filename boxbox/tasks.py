@@ -9,7 +9,33 @@ import os
 
 from subprocess import CalledProcessError
 from .utils import task, log, warning, debug, nl, yesno
+from .exceptions import BoxBoxError
 from .shellcommand import ShellCommand as CMD
+
+OPS = ('vagrant', 'virtualbox', 's3')
+
+
+class TaskRunner(object):
+    def __init__(self, config):
+        self._cfg = config
+        try:
+            self.op = config['op']
+            self.task = config['task']
+        except (KeyError, TypeError):
+            raise BoxBoxError(
+                'invalid task configuration for\n{0}'.format(
+                    json.dumps(config, indent=2)))
+        if self.op == 'virtualbox':
+            try:
+                self.vmid = config['vmid']
+                self.update = config.get('update', True)
+                self.fake = config.get('fake', False)
+            except KeyError:
+                raise BoxBoxError('vmid is required (either uuid or name)')
+
+    def run(self):
+        if self.op == 'virtualbox':
+            shrink(self.vmid, self.update, self.fake)
 
 
 def prepare(host, user, full=False):
