@@ -1,2 +1,0 @@
-# boxbox
-Vagrant + VirtualBox utilities
