@@ -125,7 +125,10 @@ def shrink(vmname, boxloc, fake, update, boxname=None, uuid=None):
 
 
 @click.command()
-def package(name=None, boxloc=None, boxname=None):
+@click.argument('name')
+@click.argument('boxloc', type=click.Path())
+@click.argument('boxname')
+def package(name, boxloc, boxname):
     tasks.package(name, os.path.join(boxloc, boxname))
 
 

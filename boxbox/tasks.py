@@ -13,6 +13,7 @@ from .exceptions import BoxBoxError
 from .shellcommand import ShellCommand as CMD
 from .sshcommand import SSHCommand as SSHCMD
 from .virtualbox import get_vm_info, remove_vm_hdd, set_vm_hdd
+from .vagrant import vagrant_package as package
 
 OPS = ('vagrant', 'virtualbox', 's3')
 
