@@ -5,6 +5,8 @@ import sys
 import os
 import shlex
 
+from subprocess import CalledProcessError
+
 """
 REPLACE SUBPROCESS WITH ENVOY MODULE!!!
 """

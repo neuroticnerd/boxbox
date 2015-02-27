@@ -1,6 +1,6 @@
 
 
-class SSHCMD(object):
+class SSHCommand(object):
     """
     simple class wrapper for executing commands over an ssh connection
     init has the same params as the .exec_command() function in SSHClient

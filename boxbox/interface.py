@@ -11,6 +11,7 @@ from collections import OrderedDict
 from .exceptions import BoxBoxError
 from .utils import nl, log, debug, error
 from .tasks import TaskRunner
+from . import tasks
 
 
 """
@@ -56,18 +57,6 @@ def CLI(config, loglevel, logfile, version):
     logging.basicConfig(format='%(message)s', level=loglevel)
     #logging.debug('CWD="{0}"'.format(os.getcwd()))
 
-    boxloc = os.path.expanduser('~/git/jlor/boxes')
-    host = 'streams.junyo.vm'
-    name = 'streams'
-    user = 'vagrant'
-
-    # run the program
-    #tasks.prepare(host, user)
-    #boxname = tasks.shrink(name, update=True, fake=False)
-    #tasks.package(name, os.path.join(boxloc, boxname))
-    #package_lzma()
-    #box_upload()
-
 
 @click.command()
 @click.argument('runfile', type=click.File('rb'), default='boxbox.json')
@@ -101,15 +90,52 @@ def run(runfile):
 
 
 @click.command()
-def vbox():
-    logging.error('here is the vbox subcommand')
+@click.argument('host')
+@click.argument('user', required=False, default=None)
+@click.option(
+    '--full', 'full',
+    is_flag=True,
+    default=False,
+    help='also performs dd for full disk zero')
+def prepare(host, user, full):
+    debug('performing disk zero: {0}'.format(full))
+    try:
+        user, host = host.split('@')
+    except:
+        if user is None:
+            raise BoxBoxError('user must also be specified with host')
+    tasks.prepare(host, user, full)
 
 
 @click.command()
-def vagrant():
-    logging.error('here is the vagrant subcommand')
+@click.argument('vmname')
+@click.argument('boxloc', type=click.Path(exists=True))
+@click.option(
+    '--fake', 'fake',
+    is_flag=True,
+    default=False,
+    help='do not actually modify the relevant VMs')
+@click.option(
+    '--update', 'update',
+    is_flag=True,
+    default=True,
+    help='update the VM to use the new clone as its hdd')
+def shrink(vmname, boxloc, fake, update, boxname=None, uuid=None):
+    boxname = tasks.shrink(vmname, update=update, fake=fake)
+
+
+@click.command()
+def package(name=None, boxloc=None, boxname=None):
+    tasks.package(name, os.path.join(boxloc, boxname))
+
+
+@click.command()
+def upload():
+    tasks.box_upload()
 
 
 CLI.add_command(run)
-#CLI.add_command(vbox)
-#CLI.add_command(vagrant)
+CLI.add_command(prepare)
+CLI.add_command(shrink)
+CLI.add_command(package)
+CLI.add_command(upload)
