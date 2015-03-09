@@ -1,0 +1,35 @@
+[
+  {
+    "op": "vagrant",
+    "task": "shrink",
+    "vmid": "streams",
+    "update": true,
+    "fake": false
+  },
+  {
+    "op": "virtualbox",
+    "task": "shrink",
+    "vmid": "streams",
+    "update": true,
+    "fake": false
+  },
+  {
+    "op": "vagrant",
+    "task": "package",
+    "box": "~/git/jlor/boxes/{boxname}"
+  },
+  {
+    "op": "s3",
+    "task": "shrink",
+    "name": "streams",
+    "update": true,
+    "fake": false
+  }
+]
+
+    """
+    boxloc = os.path.expanduser('~/git/jlor/boxes')
+    host = 'streams.junyo.vm'
+    name = 'streams'
+    user = 'vagrant'
+    """

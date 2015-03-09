@@ -171,6 +171,11 @@ def shrink(vmname, update=True, fake=False):
         log(command.out)
 
     # later commands may error out if disk file is still registered
+    #
+    # can this be used to force the removal from other VMs?
+    # https://coderwall.com/p/8m--dq/purge-deleted-hard-disks-from-virtual-box
+    # VBoxManage closemedium disk UUID --delete
+    #
     showhdinfo = 'VBoxManage showhdinfo "{uuid}"'
     find_token = 'In use by VMs:'
     command = CMD(showhdinfo.format(uuid=hdduuid)).grep(find_token)

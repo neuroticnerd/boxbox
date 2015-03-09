@@ -56,3 +56,6 @@ setup(
     entry_points = SCRIPTS,
     install_requires=REQUIRES,
     )
+
+# @@@ TODO: figure out if there's a way to use setup() to enable tab complete
+# for bash (eval "$(_FOO_BAR_COMPLETE=source foo-bar)")
